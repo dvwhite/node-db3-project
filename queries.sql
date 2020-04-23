@@ -32,3 +32,32 @@ INNER JOIN "Customer" as c
 ON o.CustomerId = c.Id
 INNER JOIN "Employee" as e
 ON o.EmployeeId = e.Id;
+
+-- STRETCH
+-- Displays CategoryName and a new column called Count that shows how many products are in each category. Shows 8 records.
+-- Version for the TryIt Editor:
+SELECT c.CategoryName As "Category", 
+       COUNT(p.CategoryID) as "Count"
+FROM "Categories" as c
+INNER JOIN "Products" as p
+ON c.CategoryID = p.CategoryID
+
+-- Version for the SQLite Studio db browser
+-- SELECT c.CategoryName As "Category", 
+--        COUNT(p.CategoryId) as "Count"
+-- FROM "Category" as c
+-- INNER JOIN "Product" as p
+-- ON c.Id = p.CategoryId
+-- GROUP BY c.CategoryName
+
+--Display OrderID and a column called ItemCount that shows the total number of products placed on the order. Shows 196 records.
+-- Version for the TryIt Editor:
+SELECT o.OrderID, SUM(o.Quantity) As "ItemCount"
+FROM "OrderDetails" as o
+GROUP BY o.OrderID
+
+-- The version for the SQLite Studio db browser returns > 196 records due to differences between table contents
+-- The northwind.db3 file has 16818 distinct order IDs in the "OrderDetail" table, whereas there are 196 online
+SELECT o.OrderId, SUM(o.Quantity) As "ItemCount"
+FROM "OrderDetail" as o
+GROUP BY o.OrderId
