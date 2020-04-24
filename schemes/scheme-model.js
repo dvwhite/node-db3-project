@@ -7,6 +7,7 @@ module.exports = {
   add,
   update,
   remove,
+  addStep
 };
 
 function find() {
@@ -48,4 +49,13 @@ function remove(id) {
     .where({ id })
     .delete()
     .then((record) => (record === 1 ? record : null));
+}
+
+function addStep(step, scheme_id) {
+  return db("steps")
+    .insert({...step, scheme_id})
+    .then(async ids => {
+      const steps = await findSteps(scheme_id);
+      return steps.find(step => step.id === ids[0])
+    })
 }
