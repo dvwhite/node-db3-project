@@ -7,9 +7,10 @@ const router = express.Router();
 router.get('/', (req, res) => {
   Schemes.find()
   .then(schemes => {
-    res.json(schemes);
+    res.status(200).json(schemes);
   })
   .catch(err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to get schemes' });
   });
 });
@@ -20,12 +21,13 @@ router.get('/:id', (req, res) => {
   Schemes.findById(id)
   .then(scheme => {
     if (scheme) {
-      res.json(scheme);
+      res.status(200).json(scheme);
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id.' })
     }
   })
   .catch(err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to get schemes' });
   });
 });
@@ -36,12 +38,13 @@ router.get('/:id/steps', (req, res) => {
   Schemes.findSteps(id)
   .then(steps => {
     if (steps.length) {
-      res.json(steps);
+      res.status(200).json(steps);
     } else {
       res.status(404).json({ message: 'Could not find steps for given scheme' })
     }
   })
   .catch(err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to get steps' });
   });
 });
@@ -54,6 +57,7 @@ router.post('/', (req, res) => {
     res.status(201).json(scheme);
   })
   .catch (err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to create new scheme' });
   });
 });
@@ -87,13 +91,14 @@ router.put('/:id', (req, res) => {
     if (scheme) {
       Schemes.update(changes, id)
       .then(updatedScheme => {
-        res.json(updatedScheme);
+        res.status(200).json(updatedScheme);
       });
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
     }
   })
   .catch (err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to update scheme' });
   });
 });
@@ -104,12 +109,13 @@ router.delete('/:id', (req, res) => {
   Schemes.remove(id)
   .then(deleted => {
     if (deleted) {
-      res.json({ removed: deleted });
+      res.status(200).json({ removed: deleted });
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
     }
   })
   .catch(err => {
+    console.log(err)
     res.status(500).json({ message: 'Failed to delete scheme' });
   });
 });
